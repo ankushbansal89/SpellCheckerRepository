@@ -16,14 +16,14 @@ public class Trie implements TrieInterface {
 
 	// Stores information about the root node of the trie
 	private NodeInterface root;
-	
+
 	/**
 	 * This constructor initializes root node with value '0'
 	 */
 	Trie() {
 		this.root = new Node('0');
 	}
-	
+
 	/**
 	 * @return the root
 	 */
@@ -49,19 +49,23 @@ public class Trie implements TrieInterface {
 
 			// Adding ith  letter as child node of the i-1 th letter 
 			for ( int i = 0; i < length; i++ ) {
-				Map< Character, NodeInterface > child = node.getChildren();
-				char ch = value.charAt(i);
-				if ( child.containsKey(ch) ){
-					node = child.get(ch);
+				if ( node != null ) {
+					Map< Character, NodeInterface > child = node.getChildren();
+					char ch = value.charAt(i);
+					if ( child.containsKey(ch) ){
+						node = child.get(ch);
+					}else {
+						// Create a new node and insert it into the children map 
+						NodeInterface temp = new Node(ch);
+						child.put(ch, temp);
+						node = temp;
+					}
 				}else {
-					// Create a new node and insert it into the children map 
-					NodeInterface temp = new Node(ch);
-					child.put(ch, temp);
-					node = temp;
+					return false;
 				}
 			}
 			// Mark the end of a word
-			node.isEnd(true);
+			node.setEnd(true);
 			return true;
 		}
 		return false;
@@ -73,32 +77,33 @@ public class Trie implements TrieInterface {
 	@Override
 	public boolean contains(String value) {
 		if ( value != null ) {
-			
+
 			// Convert string to lower case
 			value = value.toLowerCase();
-			
+
 			int length = value.length();
-			
+
 			if ( length <= 0 ) {
 				return false;
 			}
-			
+
 			NodeInterface node = this.root;
-			
+
 			for ( int i = 0; i < length; i++ ) {
 				char ch = value.charAt(i);
-				Map< Character, NodeInterface> child = node.getChildren();
-				// checking whether map contains that key or not
-				if ( child.containsKey(ch) ) {
-					node = child.get(ch);
-					// check whether node is end of a word and it's the last character of the word
-					if ( node.hasEnd() && i == ( length - 1 ) ) {
-						return true;
+				if ( node != null ) {
+					Map< Character, NodeInterface> child = node.getChildren();
+					// checking whether map contains that key or not
+					if ( child.containsKey(ch) ) {
+						node = child.get(ch);
+					}else {
+						return false;
 					}
 				}else {
 					return false;
 				}
 			}
+			// check whether node is end of a word and it's the last character of the word
 			if ( node.hasEnd() ) {
 				return true;
 			}

@@ -21,13 +21,13 @@ public interface NodeInterface {
 	 * This method sets value in the node
 	 * @return true if value is properly set, else it returns false
 	 */
-	public boolean setValue( char value);
+	public void setValue( char value);
 	
 	/**
 	 * This method sets true if node marks end of a word
 	 * @return true if value is correctly set, else it returns false
 	 */ 
-	public boolean isEnd( boolean end);	
+	public void setEnd( boolean end);	
 	
 	/**	
 	 * This method returns whether node is end of a word or not

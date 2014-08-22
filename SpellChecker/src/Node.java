@@ -22,8 +22,8 @@ public class Node implements NodeInterface {
 	private Map<Character, NodeInterface> children;
 	
 	Node( char value) {
-		this.value = value;
-		this.end = false;
+		setValue( value );
+		setEnd( false );
 		children = new HashMap<Character, NodeInterface> ();
 	}
 	
@@ -39,18 +39,16 @@ public class Node implements NodeInterface {
 	 * @see Node#setValue()
 	 */
 	@Override
-	public boolean setValue( char value ) {
+	public void setValue( char value ) {
 		this.value = value;
-		return true;
 	}
 
 	/* (non-Javadoc)
 	 * @see Node#isEnd()
 	 */
 	@Override
-	public boolean isEnd( boolean end) {
+	public void setEnd( boolean end) {
 		this.end = end;
-		return true;
 	}
 
 	/* (non-Javadoc)
